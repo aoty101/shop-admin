@@ -22,5 +22,7 @@ console.log(a)
 </script>
 
 <style lang='scss' scoped>
-
+div{
+  color: $blue;
+}
 </style>
