@@ -1,5 +1,5 @@
 /**
- * 用户接口
+ * 文章接口
  */
 import request from '@/utils/request'
 

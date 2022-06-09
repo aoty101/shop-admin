@@ -1,10 +1,11 @@
 /**
- * 用户接口
+ * 公共基础接口
  */
 import request from '@/utils/request'
+import { ILoginInfo } from './types/common'
 
 export const getLoginInfo = () => {
-  request({
+  return request<ILoginInfo>({
     method: 'GET',
     url: '/login/info'
   })
