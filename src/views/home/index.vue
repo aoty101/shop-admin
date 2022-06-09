@@ -5,6 +5,9 @@
     <button @click="counter.increment">
       增加
     </button>
+    <el-button type="primary">
+      hi
+    </el-button>
   </div>
 </template>
 
