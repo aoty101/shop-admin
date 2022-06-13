@@ -1,12 +1,10 @@
 <template>
   <div>
-    首页
+    attr
   </div>
 </template>
 
 <script setup lang='ts'>
-// import { useGlobalStore } from '@/store/index'
-// import { storeToRefs } from 'pinia'
 
 </script>
 

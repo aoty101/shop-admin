@@ -1,12 +1,10 @@
 <template>
   <div>
-    首页
+    classify
   </div>
 </template>
 
 <script setup lang='ts'>
-// import { useGlobalStore } from '@/store/index'
-// import { storeToRefs } from 'pinia'
 
 </script>
 
