@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia'
 
-export const useCounterStore = defineStore('conter', {
+export const useGlobalStore = defineStore('global', {
   state: () => ({
-    count: 0
+    count: 0,
+    isCollapse: false
   }),
   getters: {
     doubleCount: (state) => state.count * 2
@@ -10,6 +11,9 @@ export const useCounterStore = defineStore('conter', {
   actions: {
     increment () {
       this.count++
+    },
+    setIsCollapse (payload:boolean) {
+      this.isCollapse = payload
     }
   }
 })
