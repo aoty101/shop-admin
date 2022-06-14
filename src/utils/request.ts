@@ -1,5 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { useGlobalStore } from '@/store'
+import router from '@/router/'
 
 const request = axios.create({
   baseURL: import.meta.env.VITE_API_BASEURL
@@ -9,6 +11,10 @@ const request = axios.create({
 request.interceptors.request.use(
   config => {
     // 统一设置用户身份 Token
+    const user = useGlobalStore().user
+    if (user && user.token) {
+      config.headers.Authorization = `Bearer ${user.token}`
+    }
     return config
   },
   error => {
@@ -16,18 +22,52 @@ request.interceptors.request.use(
   }
 )
 
+// 控制登录过期的锁
+let isRefreshing = false
+
 // 响应拦截器
 request.interceptors.response.use(
   response => {
     // 统一处理响应错误，例如 token 无效、服务端异常等
-    if (response.data.status && response.data.status !== 200) {
-      ElMessage.error(response.data.msg || '请求失败，请稍后重试...')
-      return Promise.reject(response.data)
+    const status = response.data.status
+    // 正确的情况
+    if (!status || status === 200) {
+      return response
     }
-    return response
+
+    // 统一处理登录过期
+    if (status === 410000) {
+      if (isRefreshing) return Promise.reject(response)
+      isRefreshing = true
+      ElMessageBox.confirm('您的登录已过期，您可以取消停留在此页面，或确认重新登录', '登录过期', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消'
+      }).then(() => {
+      // 清除本地过期的登录状态
+        useGlobalStore().setUser(null)
+        // 跳转到登录页面
+        router.push({
+          name: 'login',
+          query: {
+            redirect: router.currentRoute.value.fullPath
+          }
+        })
+      // 抛出异常
+      }).finally(() => {
+        isRefreshing = false
+      })
+
+      // 在内部消化掉这个业务异常
+      return Promise.reject(response)
+    }
+
+    // 其它错误情况
+    ElMessage.error(response.data.msg || '请求失败，请稍后重试')
+    // 手动返回一个 Promise 异常
+    return Promise.reject(response)
   },
-  err => {
-    return Promise.reject(err)
+  error => {
+    return Promise.reject(error)
   }
 )
 

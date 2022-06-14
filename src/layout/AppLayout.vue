@@ -25,6 +25,7 @@ import AppHeader from './components/AppHeader/index.vue'
 <style lang='scss' scoped>
 .el-header{
   display: flex;
+  justify-content: space-between;
   background-color: #fff;
   color:#333
 }

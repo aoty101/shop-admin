@@ -9,6 +9,7 @@ export interface IUserInfo {
   id: number
   account: string
   head_pic: string
+  token:string
 }
 
 export interface IMenu {

@@ -129,10 +129,13 @@ const handleSubmit = async () => {
   ElMessage.success('登录成功')
 
   // 存储登录用户信息
-  await useGlobalStore().setUser(data.user_info)
+  await useGlobalStore().setUser({
+    ...data.user_info,
+    token: data.token
+  })
 
   // 跳转回原来页面
-  let redirect = route.query.redirect
+  let redirect = route.query.redirect || '/'
   if (typeof redirect !== 'string') {
     redirect = '/'
   }

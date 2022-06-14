@@ -4,11 +4,15 @@ import productRoutes from './modules/product'
 import orderRoutes from './modules/order'
 import nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
+import { useGlobalStore } from '@/store'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: AppLayout,
+    meta: {
+      requireAuth: true
+    },
     children: [
       {
         path: '',
@@ -34,7 +38,13 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach(() => {
+router.beforeEach((to, from) => {
+  if (to.meta.requireAuth && !useGlobalStore().user) {
+    return {
+      path: '/login',
+      query: { redirect: to.fullPath }
+    }
+  }
   nprogress.start()
 })
 

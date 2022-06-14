@@ -7,7 +7,7 @@ export const useGlobalStore = defineStore('global', {
   state: () => ({
     count: 0,
     isCollapse: false,
-    user: getItem<IUserInfo>(USER)
+    user: getItem<{ token:string } & IUserInfo>(USER)
     // user: JSON.parse(window.localStorage.getItem(USER) || 'null') as IUserInfo | null
   }),
   getters: {

@@ -6,7 +6,7 @@
   <el-space size="large">
     <MenuSearch />
     <FullScreen />
-    <!-- <Notification /> -->
+    <Notification />
     <UserInfo />
   </el-space>
 </template>
@@ -16,7 +16,7 @@ import ToggleSidebar from './toggle-sidebar.vue'
 import Breadcrumb from './header-breadcrumb.vue'
 import FullScreen from './header-fullScreen.vue'
 import MenuSearch from './menu-search.vue'
-// import Notification from './header-notify.vue'
+import Notification from './header-notify.vue'
 import UserInfo from './user-info.vue'
 
 </script>

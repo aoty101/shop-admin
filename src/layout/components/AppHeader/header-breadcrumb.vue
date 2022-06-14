@@ -19,7 +19,6 @@ const router = useRouter()
 const routes = computed(() => {
   return router.currentRoute.value.matched.filter(item => item.meta.title)
 })
-console.log(router.currentRoute.value.matched)
 
 </script>
 

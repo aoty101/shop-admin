@@ -36,7 +36,7 @@ const handleLogou = () => {
     await logout()
 
     // 清除用户登录信息
-    store.setUser(null)
+    await store.setUser(null)
 
     ElMessage({
       type: 'success',
@@ -47,7 +47,9 @@ const handleLogou = () => {
     router.push({
       name: 'login'
     })
-  }).catch(() => {
+  }).catch((err) => {
+    console.log(err)
+
     ElMessage({
       type: 'info',
       message: '已取消退出'
