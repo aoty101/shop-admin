@@ -1,9 +1,14 @@
 import { defineStore } from 'pinia'
+import { IUserInfo } from '@/api/types/common'
+import { setItem, getItem } from '@/utils/storage'
+import { USER } from '@/utils/constants'
 
 export const useGlobalStore = defineStore('global', {
   state: () => ({
     count: 0,
-    isCollapse: false
+    isCollapse: false,
+    user: getItem<IUserInfo>(USER)
+    // user: JSON.parse(window.localStorage.getItem(USER) || 'null') as IUserInfo | null
   }),
   getters: {
     doubleCount: (state) => state.count * 2
@@ -12,8 +17,12 @@ export const useGlobalStore = defineStore('global', {
     increment () {
       this.count++
     },
-    setIsCollapse (payload:boolean) {
+    setIsCollapse (payload: boolean) {
       this.isCollapse = payload
+    },
+    setUser (payload: IUserInfo | null) {
+      this.user = payload
+      setItem(USER, this.user)
     }
   }
 })
